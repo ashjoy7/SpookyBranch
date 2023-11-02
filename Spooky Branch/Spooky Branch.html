@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Alex's Scripture Mastery Quiz!</title>
+  <style>
+    .clue-container {
+      margin-bottom: 20px;
+    }
+    .title-container {
+      text-align: center;
+      padding: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="title-container">
+  <h1>Welcome to Alex's Scripture Mastery Quiz!</h1>
+  <p>Get the answers right and you'll get a clue... get them wrong and you will suffer for eternity!!!! Muhaahahahahah!</p>
+  <button onclick="startQuiz()">Continue...</button>
+</div>
+
+<div id="clues" style="display: none;">
+  <div class="clue-container" id="clue1-container" style="display: none;">
+    <p>Clue 1: "And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them."</p>
+    <label for="answer1">Enter your answer:</label>
+    <input type="text" id="answer1" placeholder="Enter your answer">
+    <button onclick="checkAnswer(1)">Submit</button>
+    <p id="clue1" style="display: none;">Put your elbows to the wheel push along</p>
+    <audio id="audio1" style="display: none;" controls>
+      <source src="audio1.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="clue-container" id="clue2-container" style="display: none;">
+    <p>Clue 2: "For behold, this is my work and my glory—to bring to pass the immortality and eternal life of man."</p>
+    <label for="answer2">Enter your answer:</label>
+    <input type="text" id="answer2" placeholder="Enter your answer">
+    <button onclick="checkAnswer(2)">Submit</button>
+    <p id="clue2" style="display: none;">It may not be on the tower height or over the stormy sea</p>
+    <audio id="audio2" style="display: none;" controls>
+      <source src="audio2.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="clue-container" id="clue3-container" style="display: none;">
+    <p>Clue 3: "Adam fell that men might be; and men are, that they might have joy."</p>
+    <label for="answer3">Enter your answer:</label>
+    <input type="text" id="answer3" placeholder="Enter your answer">
+    <button onclick="checkAnswer(3)">Submit</button>
+    <p id="clue3" style="display: none;">Truth is our helmet, buckler and sword.</p>
+    <audio id="audio3" style="display: none;" controls>
+      <source src="audio3.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="clue-container" id="clue4-container" style="display: none;">
+    <p>Clue 4: "O, remember, my son, and learn wisdom in thy youth; yea, learn in thy youth to keep the commandments of God."</p>
+    <label for="answer4">Enter your answer:</label>
+    <input type="text" id="answer4" placeholder="Enter your answer">
+    <button onclick="checkAnswer(4)">Submit</button>
+    <p id="clue4" style="display: none;">With hope’s bright ‘eye’ a-light in heart and mind</p>
+    <audio id="audio4" style="display: none;" controls>
+      <source src="audio4.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  <button id="prevClueButton" style="display: none;" onclick="prevClue()">Previous Clue</button>
+  <button id="nextClueButton" style="display: none;" onclick="nextClue()">Next Clue</button>
+</div>
+
+<script>
+  const userAnswers = {
+    1: '',
+    2: '',
+    3: '',
+    4: ''
+  };
+
+  let currentClue = 1;
+
+  function startQuiz() {
+    document.getElementById('clues').style.display = 'block';
+    document.getElementById(`clue${currentClue}-container`).style.display = 'block';
+  }
+
+  function checkAnswer(clueNumber) {
+    const answerElement = document.getElementById(`answer${clueNumber}`);
+    const clueElement = document.getElementById(`clue${clueNumber}`);
+    const audioElement = document.getElementById(`audio${clueNumber}`);
+    const nextClueButton = document.getElementById('nextClueButton');
+
+    if (answerElement.value.trim() === `1 Nephi 3:7`) {
+      clueElement.style.display = 'block';
+      audioElement.style.display = 'block';
+      nextClueButton.style.display = 'block';
+      userAnswers[clueNumber] = answerElement.value.trim();
+    }
+  }
+
+  function nextClue() {
+    currentClue++;
+    const currentClueContainer = document.getElementById(`clue${currentClue}-container`);
+    currentClueContainer.style.display = 'block';
+    const prevClueButton = document.getElementById('prevClueButton');
+    prevClueButton.style.display = 'block';
+
+    const prevClueContainer = document.getElementById(`clue${currentClue - 1}-container`);
+    prevClueContainer.style.display = 'none';
+
+    displayUserAnswer(currentClue);
+  }
+
+  function prevClue() {
+    if (currentClue > 1) {
+      currentClue--;
+      const currentClueContainer = document.getElementById(`clue${currentClue}-container`);
+      currentClueContainer.style.display = 'block';
+
+      const nextClueButton = document.getElementById('nextClueButton');
+      nextClueButton.style.display = 'block';
+
+      const currentAudio = document.getElementById(`audio${currentClue}`);
+      currentAudio.pause();
+
+      const prevClueContainer = document.getElementById(`clue${currentClue + 1}-container`);
+      prevClueContainer.style.display = 'none';
+
+      displayUserAnswer(currentClue);
+    }
+
+    if (currentClue === 1) {
+      const prevClueButton = document.getElementById('prevClueButton');
+      prevClueButton.style.display = 'none';
+    }
+  }
+
+  function displayUserAnswer(clueNumber) {
+    const answerElement = document.getElementById(`answer${clueNumber}`);
+    answerElement.value = userAnswers[clueNumber];
+  }
+</script>
+
+</body>
+</html>
